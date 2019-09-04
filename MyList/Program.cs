@@ -9,7 +9,6 @@ namespace MyList
     class MyList
     {
         private int LastIndex { get; set; }
-        private int Count { get; }
         private object[] _array;
         private int _capacity = 5;
 
@@ -24,7 +23,7 @@ namespace MyList
         }
 
 
-        //private void InitArray() => array = new object[_capacity];
+        //private void InitArray() => _array = new object[_capacity];
 
         private void InitArray()
         {
@@ -58,46 +57,43 @@ namespace MyList
 
         public void Insert(int index, object obj)
         {
-            if (index < _array.Length)
+            if (index <= _array.Length && index > 0)
             {
-                if (LastIndex == index)
+                if ((index == _capacity && index == LastIndex) || LastIndex == _capacity)
                 {
-                    _array[index] = obj;
-                    LastIndex++;
+                    _capacity *= 2;
+                    RenitArray();
                 }
-                else
+
+                for (int i = _capacity -1 ; i > index; i--)
                 {
-                    Console.WriteLine($"Invalid index !!!");
+                    _array[i] = _array[i - 1];
                 }
-            }
-            else if(index == _capacity && index == LastIndex)
-            {
-                _capacity *= 2;
-                RenitArray();
                 _array[index] = obj;
                 LastIndex++;
             }
             else
             {
-                Console.WriteLine($"Inset false!!!");
+                Console.WriteLine($"Inset false!!!"); ;
             }
+
         }
 
         public void Remove(object obj)
         {
-            for (int i = 0; i < _array.Length; i++)
-            {
-                if (_array[i] == obj)
-                {
-                    _array[i] = null;
-                }
-            }
+            RemoveAt(IndexOf(obj));
+            
         }
         public void RemoveAt(int index)
         {
-            if (index < _array.Length)
+            if (index < _array.Length && index > 0)
             {
-                _array[index] = null;
+                LastIndex--;
+                for(int i = index;i<LastIndex;i++)
+                {
+                    _array[i] = _array[i + 1];
+                }
+                _array[LastIndex] = null;
             }
             else
             {
@@ -117,20 +113,18 @@ namespace MyList
         {
             for (int i = 0; i < _array.Length; i++)
             {
-                if (_array[i] == obj) return true;
+                if ( Equals( _array[i], obj)) return true;
             }
             return false;
         }
 
         public int IndexOf(object obj)
         {
-            int index;
             for (int i = 0; i < _array.Length; i++)
             {
-                if (_array[i] == obj)
+                if (Equals(_array[i], obj))
                 {
-                    index = (int)_array[i];
-                    return index;
+                    return i; 
                 }
 
             }
@@ -140,7 +134,12 @@ namespace MyList
 
         public object[] ToArray()
         {
-            return _array;
+            object[] newArray = new object[_array.Length];
+            for (int i = 0; i < _array.Length; i++)
+            {
+                newArray[i] = _array[i];
+            }
+            return newArray;
         }
 
         public void Reverse()
@@ -167,7 +166,7 @@ namespace MyList
             array.Add(9);
             array.Add(15);
             array.Add(30);
-           
+
             var rr = array.ToArray();
             var l = rr.Length;
             foreach (var i in rr)
@@ -175,17 +174,26 @@ namespace MyList
                 Console.WriteLine($"{i}");
             }
             Console.WriteLine($"Next array\n");
-            array.Insert(5, 56);
-            array.Insert(6, 145);
-            array.Insert(7, 22);
-            array.Insert(9, 7);
+            array.Remove(9);
+            array.Add(9);
+
+
+
+
 
             var rr1 = array.ToArray();
             foreach (var i in rr1)
             {
-                Console.WriteLine($"{i}");
+                if (i == null)
+                {
+                    Console.WriteLine($"null");
+                }
+                else
+                {
+                    Console.WriteLine($"{i}");
+                }
             }
-
+            
             Console.ReadLine();
         }
     }
