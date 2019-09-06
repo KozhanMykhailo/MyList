@@ -161,28 +161,29 @@ namespace MyList
         static void Main(string[] args)
         {
 
-            MyListLib.MyListLib array = new MyListLib.MyListLib();
-            array.Add(4);
-            array.Add(7);
-            array.Add(9);
-            array.Add(15);
-            array.Add(30);
+            MyListLib<int> array = new MyListLib.MyListLib<int>();
+            MyListLib<string> array1 = new MyListLib<string>();
+            array.Add(4); array1.Add("dfdfdfdf");
+            array.Add(7); array1.Add("dfdflllll");
+            array.Add(9); array1.Add("99");
+            array.Add(15); array1.Add("dgggggg1df");
+            array.Add(30); array1.Add("dfjjjjjj1df");
 
-            var rr = array.ToArray();
+            var rr = array1.ToArray();
             var l = rr.Length;
             foreach (var i in rr)
             {
                 Console.WriteLine($"{i}");
             }
             Console.WriteLine($"Next array\n");
-            array.Remove(9);
-            array.Add(9);
+            array1.Remove("99");
+            array1.Add("99");
 
 
 
 
 
-            var rr1 = array.ToArray();
+            var rr1 = array1.ToArray();
             foreach (var i in rr1)
             {
                 if (i == null)

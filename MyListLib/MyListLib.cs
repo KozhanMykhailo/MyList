@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyListLib
 {
-    public class MyListLib
+    public class MyListLib<T>
     {
 
         private int LastIndex { get; set; }
-        private object[] _array;
+        private T[] _array;
         private int _capacity = 5;
 
         public MyListLib(int capacity)
@@ -29,13 +29,13 @@ namespace MyListLib
         private void InitArray()
         {
 
-            _array = new object[_capacity];
+            _array = new T[_capacity];
 
         }
         private void RenitArray()
         {
-            object[] newArray = _array;
-            _array = new object[_capacity];
+            T[] newArray = _array;
+            _array = new T[_capacity];
             if (_array != null)
             {
                 for (int i = 0; i < newArray.Length; i++)
@@ -45,7 +45,7 @@ namespace MyListLib
             }
         }
 
-        public void Add(int newValue)
+        public void Add(T newValue)
         {
             if (LastIndex == _capacity)
             {
@@ -56,7 +56,7 @@ namespace MyListLib
             LastIndex++;
         }
 
-        public void Insert(int index, object obj)
+        public void Insert(int index, T obj)
         {
             if (index <= _array.Length && index > 0)
             {
@@ -94,7 +94,7 @@ namespace MyListLib
                 {
                     _array[i] = _array[i + 1];
                 }
-                _array[LastIndex] = null;
+                _array[LastIndex] = default;
             }
             else
             {
@@ -106,7 +106,7 @@ namespace MyListLib
         {
             for (int i = 0; i < _array.Length; i++)
             {
-                _array[i] = null;
+                _array[i] = default;
             }
         }
 
@@ -147,7 +147,7 @@ namespace MyListLib
         {
             for (int i = 0, j = _array.Length - 1; i < j; i++, j--)
             {
-                object temp = _array[i];
+                T temp = _array[i];
                 _array[i] = _array[j];
                 _array[j] = temp;
             }
